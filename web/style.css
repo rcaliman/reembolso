@@ -1,0 +1,228 @@
+:root{font-family:system-ui,sans-serif;color:#20352f;background:#f3f5f1;font-size:15px}*{box-sizing:border-box}body{margin:0}main{max-width:980px;margin:48px auto;padding:0 24px}header{margin-bottom:32px}.eyebrow{font-size:11px;letter-spacing:2px;font-weight:700;color:#527567}h1{font-size:38px;letter-spacing:-1.5px;margin:12px 0}p{color:#65736c}section{background:white;border:1px solid #dce3db;border-radius:12px;padding:24px;margin:16px 0}h2{font-size:14px;color:#658170;margin:0 0 22px;display:flex;align-items:center;gap:14px}h2 span{font-size:19px;color:#20352f}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}label{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600}input,select{width:100%;border:1px solid #cbd6ce;border-radius:6px;padding:11px;background:#fff;font:inherit;color:#20352f;min-width:0}input:focus,select:focus{outline:2px solid #59947a;outline-offset:1px}.picker{margin-bottom:22px;padding-bottom:20px;border-bottom:1px solid #e7ebe7}.check{flex-direction:row;align-items:center;margin-bottom:18px}.check input{width:auto}aside{font-size:13px;color:#637568;padding:12px 2px}footer{display:flex;justify-content:space-between;align-items:center;padding:16px 0 40px;gap:20px}footer span{font-size:12px;color:#738076}button,.button{display:inline-block;background:#235e49;color:white;border:0;border-radius:6px;padding:14px 22px;font:600 14px system-ui;cursor:pointer;text-decoration:none}button:disabled{opacity:.5;cursor:wait}button b{margin-left:20px}#error{color:#ac302b;white-space:pre-line}.hidden{display:none}.print-toolbar{padding:18px 24px;display:flex;gap:18px;align-items:center;background:white;flex-wrap:wrap}.print-toolbar a{color:#235e49}.print-toolbar span{font-size:13px;color:#65736c}.sheet{width:210mm;height:297mm;position:relative;background:white;margin:24px auto;box-shadow:0 4px 24px #0002}.sheet>img{position:absolute;width:100%;height:100%;inset:0}.field{position:absolute;font-family:Arial,sans-serif;font-size:10pt;line-height:1.05;white-space:nowrap;color:#000;transform-origin:left center}.registration{display:grid;grid-template-columns:33.5fr repeat(15,36fr) 38.5fr;justify-items:center;font-size:11pt}.registration span{text-align:center;min-width:0}.print-error{padding:30px;color:#ac302b}@media(max-width:650px){main{margin:28px auto;padding:0 16px}h1{font-size:30px}.grid{grid-template-columns:1fr}section{padding:18px}footer{align-items:stretch;flex-direction:column}.sheet{margin:16px 0}}
+
+.invoice-sheet>img{object-fit:contain}
+
+.login-main{max-width:560px}.stack{display:flex;flex-direction:column;gap:20px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;padding:12px 8px;border-bottom:1px solid #e7ebe7;overflow-wrap:anywhere}th{color:#637568;font-size:12px}.danger{background:#f9eae8;color:#9b3029;padding:8px 14px}#status{color:#235e49;white-space:pre-line}small{font-size:12px;color:#65736c;font-weight:400}
+
+.field-error{color:#ac302b;font-size:12px;font-weight:400}.field-error:empty{display:none}input[aria-invalid="true"]{border-color:#ac302b;background:#fffafa}input[data-kind="money"]{font-variant-numeric:tabular-nums}
+
+/* Na impressão, apenas as folhas ocupam espaço; avisos e navegação ficam fora.
+   A folga de 0,1 mm evita que o arredondamento da altura A4 desloque a folha. */
+@page { size: A4; margin: 0; }
+@media print {
+  html, body { margin: 0 !important; padding: 0 !important; width: 210mm; height: auto; min-height: 0; background: #fff; }
+  .user-nav, .print-toolbar, .print-error { display: none !important; }
+  .print-page > :not(.print-pages) { display: none !important; }
+  .print-pages { display: block; margin: 0; padding: 0; border: 0; }
+  .print-pages > .sheet {
+    display: block; width: 210mm; height: 296.9mm;
+    margin: 0 !important; padding: 0; border: 0; box-shadow: none; overflow: hidden;
+    break-before: auto; page-break-before: auto;
+    break-after: auto; page-break-after: auto;
+    break-inside: avoid; page-break-inside: avoid;
+    print-color-adjust: exact; -webkit-print-color-adjust: exact;
+  }
+  .print-pages > .sheet + .sheet { break-before: page; page-break-before: always; }
+  .print-pages > .sheet.hidden { display: none; }
+}
+
+/* Preserve a leitura das colunas e mantenha a rolagem dentro da tabela. */
+.admin-main{max-width:1200px}
+.table-wrap{max-width:100%}
+.table-wrap:focus-visible{outline:2px solid #59947a;outline-offset:3px}
+.table-wrap td,.table-wrap th{vertical-align:top;line-height:1.5;overflow-wrap:normal}
+.table-wrap th{white-space:nowrap}
+.table-wrap td{overflow-wrap:break-word}
+.table-wrap .actions{width:1%;white-space:nowrap;overflow-wrap:normal;text-align:right}
+.table-wrap button{white-space:nowrap;overflow-wrap:normal;min-height:44px}
+.table-wrap button:focus-visible{outline:2px solid #9b3029;outline-offset:2px}
+.table-wrap .compact{white-space:nowrap;font-variant-numeric:tabular-nums}
+.table-wrap .record-name{min-width:170px}
+.table-wrap .emails{min-width:220px;max-width:320px;overflow-wrap:anywhere}
+.table-wrap .emails div+div{margin-top:4px}
+#people table{min-width:760px}
+
+.pedidos-main{max-width:1400px}.secondary{background:#e6ede7;color:#235e49;margin-top:18px}.totals{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;line-height:1.6}.pedidos-summary{padding:12px 0}.pedidos-main h2{font-size:24px;margin-bottom:14px}.pedidos-main .table-wrap{margin-top:18px}.pedido-date{display:block;white-space:nowrap;margin-top:4px}.reembolso-form{display:grid;gap:8px}.reembolso-form label{font-size:11px}.reembolso-form input{font-size:14px;font-variant-numeric:tabular-nums}.reembolso-form button{align-self:end;padding:10px 12px}.reembolso-form small{grid-column:1/-1;max-width:280px}.pedido-actions a{color:#235e49}
+
+.year-footer nav{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.year-footer nav span{font-size:14px}.year-footer a{color:#235e49;padding:8px 12px;border-radius:6px}.year-footer a[aria-current="page"]{background:#235e49;color:white;font-weight:600;text-decoration:none}
+
+/* O mesmo conteúdo atende à tabela de desktop e aos cartões de telas menores. */
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.cell-label{display:none}
+.skip-link{position:absolute;top:8px;left:8px;z-index:10;transform:translateY(-200%);padding:12px 16px;background:#235e49;color:#fff;border-radius:6px}
+.skip-link:focus{transform:translateY(0)}
+:where(a,button,input,select):focus-visible{outline:3px solid #235e49;outline-offset:3px}
+main:focus,.print-pages:focus{outline:none}
+input,select{font-size:16px;min-height:44px;border-color:#7c8e81}
+input::placeholder{color:#65736c;opacity:1}
+footer span,h2{color:#52645b}
+button,.button{min-height:44px;min-width:44px;line-height:1.4}
+label{line-height:1.5;min-width:0}
+.check{min-height:44px;cursor:pointer}
+.check input{min-height:24px;width:24px;height:24px;flex-shrink:0;accent-color:#235e49}
+main p,aside,.eyebrow{overflow-wrap:anywhere}
+.year-footer a,.print-toolbar a,.pedido-action a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding:10px 12px;border-radius:6px;line-height:1.4}
+.reembolso-form input{font-size:16px}
+.table-wrap .pedidos-table button:focus-visible{outline-color:#235e49}
+
+@media screen and (max-width:1100px){
+  .table-wrap:has(>.responsive-table){overflow:visible}
+  .responsive-table{display:block;position:relative}
+  .responsive-table thead{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .responsive-table tbody{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .responsive-table tr{display:flex;flex-direction:column;min-width:0;padding:16px;border:1px solid #dce3db;border-radius:10px;background:#fff}
+  .table-wrap .responsive-table td{display:block;min-width:0;max-width:none;width:auto;padding:10px 0;border:0;text-align:left;white-space:normal;overflow-wrap:anywhere}
+  .responsive-table .cell-label{display:block;font-size:12px;font-weight:600;color:#52645b;margin-bottom:4px}
+  .responsive-table .pedido-number{font-size:18px;font-weight:700;border-bottom:1px solid #e7ebe7;padding-top:0}
+  .responsive-table .pedido-date{font-size:13px;font-weight:400;white-space:normal}
+  .reembolso-form label{font-size:13px}
+  .reembolso-form small{max-width:none;overflow-wrap:anywhere}
+  .table-wrap .responsive-table .reembolso-cell{margin-top:auto}
+  .table-wrap .responsive-table .pedido-action{padding-bottom:0}
+  .pedido-action a{width:100%;background:#e6ede7;font-weight:600}
+  .table-wrap .responsive-table .actions{margin-top:auto;text-align:right}
+  .responsive-table .actions button{width:100%}
+  #people .responsive-table{min-width:0}
+}
+
+@media screen and (max-width:650px){
+  main{margin:24px auto;padding:0 16px}
+  section{padding:16px}
+  header{margin-bottom:24px}
+  .grid{gap:16px}
+  .responsive-table tbody{grid-template-columns:minmax(0,1fr)}
+  .responsive-table tr{padding:14px}
+  .totals{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;padding:16px;background:#e6ede7;border-radius:10px;overflow-wrap:anywhere}
+  .year-footer{align-items:flex-start}
+  .year-footer nav{gap:8px}
+  .year-footer nav span{flex-basis:100%;font-size:14px}
+  .year-footer a{border:1px solid #cbd6ce}
+  .print-toolbar{padding:12px 16px;gap:8px}
+  .print-toolbar span{flex-basis:100%;line-height:1.5}
+  .print-toolbar button{flex:1 1 auto}
+  input[type="file"]{max-width:100%;padding:10px 8px}
+}
+
+/* Reduz apenas a prévia na tela; o tamanho e a tipografia A4 permanecem na impressão. */
+@media screen{
+  .print-pages{padding:0 16px 24px;overflow-x:auto}
+  @supports (font-size:1cqw){
+    .sheet{container-type:inline-size;width:min(210mm,100%);height:auto;aspect-ratio:210/297;margin:24px auto}
+    /* 10 pt e 11 pt divididos pela largura A4 (595,27559 pt), em porcentagem. */
+    .field{font-size:1.67989418cqw}
+    .registration{font-size:1.84788360cqw}
+  }
+}
+
+/* Controles de instalação e atualização não ocupam espaço no documento impresso. */
+.pwa-install-dialog{width:min(440px,calc(100% - 32px));max-height:calc(100dvh - 32px);overflow:auto;border:1px solid #cbd6ce;border-radius:12px;padding:24px;color:#20352f;background:white}
+.pwa-install-dialog::backdrop{background:#0006}
+.pwa-install-dialog h2{font-size:20px;color:#20352f;margin-bottom:16px}
+.pwa-install-dialog p{line-height:1.6;margin:0 0 20px}
+.pwa-update{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:20px;padding:16px;background:#e6ede7;border-radius:8px}
+.pwa-update p{flex:1 1 220px;margin:0;color:#20352f;line-height:1.6}
+@media print{.pwa-install-dialog,.pwa-update{display:none!important}}
+
+
+.passkey-login{margin-top:24px;padding-top:8px;border-top:1px solid #dce3db}
+.passkey-login button{width:100%;margin-top:12px}
+#passkey-help{font-size:14px;line-height:1.6}
+#passkey-error{color:#ac302b;margin-top:16px;overflow-wrap:anywhere}
+#passkey-status{color:#235e49;margin-top:16px;overflow-wrap:anywhere}
+.passkey-list{list-style:none;margin:0;padding:0}
+.passkey-list li{display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:16px 0;border-bottom:1px solid #dce3db}
+.passkey-list li>div{flex:1 1 180px;min-width:0;overflow-wrap:anywhere}
+.passkey-list small{display:block;line-height:1.6;margin-top:4px}
+
+/* Links e instalação compartilham o estilo; Sair mantém o botão principal.
+   A mesma estrutura recolhe no celular e permanece horizontal no desktop. */
+.user-nav{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:20px;
+  padding:14px 24px;
+  border-bottom:1px solid #dce3db;
+  background:white;
+  font-size:13px;
+}
+.user-nav-name{
+  flex:1 1 auto;
+  min-width:0;
+  margin-right:auto;
+  overflow-wrap:anywhere;
+  font-weight:600;
+}
+.user-nav-item{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  min-width:44px;
+  padding:10px 12px;
+  border:0;
+  border-radius:6px;
+  background:transparent;
+  color:#235e49;
+  font:inherit;
+  font-weight:400;
+  line-height:1.4;
+  text-decoration:underline;
+  text-underline-offset:0.2em;
+  cursor:pointer;
+}
+.user-nav-item:hover,.user-nav-item:focus-visible{background:#e6ede7}
+.user-nav-toggle,.user-nav-logout{padding:8px 15px}
+.user-nav-install[hidden]{display:none}
+.user-nav-links{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.user-nav-links[hidden],.user-nav-toggle[hidden]{display:none}
+.user-nav-toggle{display:inline-flex;align-items:center;justify-content:center;gap:12px}
+.user-nav-toggle::after{content:'';width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg)}
+.user-nav-toggle[aria-expanded="true"]::after{transform:translateY(2px) rotate(225deg)}
+@media screen and (max-width:768px){
+  .user-nav{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;padding:10px 16px}
+  .user-nav .user-nav-name{margin:0;line-height:1.5}
+  .user-nav-links{grid-column:1 / -1;flex-direction:column;align-items:stretch;gap:4px;border-top:1px solid #dce3db;padding-top:8px}
+  .user-nav-links .user-nav-item{justify-content:flex-start;overflow-wrap:anywhere;text-align:left}
+  .user-nav-links .user-nav-logout{text-align:left;margin-top:4px}
+}
+
+/* As ações dividem a célula existente, sem alargar a tabela ou o cartão. */
+.pedido-actions{display:flex;flex-direction:column;align-items:stretch;gap:8px;min-width:0}
+.pedido-actions a,.table-wrap .pedido-actions button{display:flex;align-items:center;justify-content:center;width:100%;min-height:44px;min-width:44px;padding:10px 12px;border:0;border-radius:6px;font:600 14px system-ui;line-height:1.4;white-space:normal;overflow-wrap:anywhere;text-align:center}
+.pedido-actions a{background:#e6ede7;color:#235e49;text-decoration:none}
+.pedidos-status{color:#235e49;overflow-wrap:anywhere}
+.pedidos-status:empty{display:none}
+.pedidos-status:focus-visible,#error:focus-visible{outline:3px solid #235e49;outline-offset:3px}
+
+/* Cada pedido agrupa os dados e uma segunda linha de edição. */
+.reembolso-form{grid-template-columns:minmax(0,3fr) minmax(150px,1fr) auto;min-width:0;align-items:end}
+.reembolso-form input{height:44px}
+.reembolso-form small{max-width:none;overflow-wrap:anywhere}
+.reembolso-form small:empty{display:none}
+.pedidos-table .pedido-group>tr:first-child>td{border-bottom:0}
+.pedidos-table .reembolso-cell{padding-top:0;padding-bottom:18px}
+@media screen and (max-width:1100px){
+ .pedidos-table{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+ .pedidos-table caption{position:absolute}
+ .pedidos-table .pedido-group{display:flex;flex-direction:column;min-width:0;gap:0;padding:16px;border:1px solid #dce3db;border-radius:10px;background:#fff}
+ .pedidos-table .pedido-group>tr{padding:0;border:0;border-radius:0}
+ .pedidos-table .pedido-edit-row{margin-top:auto}
+ .pedidos-table .reembolso-cell{padding-top:16px}
+ .reembolso-form{grid-template-columns:minmax(0,2fr) minmax(120px,1fr)}
+ .reembolso-form button{grid-column:1/-1}
+}
+@media screen and (max-width:850px){
+ .pedidos-table{grid-template-columns:minmax(0,1fr)}
+}
+@media screen and (max-width:450px){
+ .reembolso-form{grid-template-columns:minmax(0,1fr) auto}
+ .reembolso-form .observacoes-label{grid-column:1/-1}
+ .reembolso-form button{grid-column:auto}
+}
+
+/* Nomes de PDFs podem ser longos e não conter espaços. */
+.print-toolbar a{min-width:0;max-width:100%;overflow-wrap:anywhere;word-break:normal}
+
+.rede-main{max-width:1200px}.rede-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.rede-actions .secondary{margin:0}.rede-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.rede-city{padding:0;border:0;background:transparent;margin-top:32px}.rede-city>h2{font-size:22px;color:#235e49;margin-bottom:16px}.rede-card{background:#fff;border:1px solid #dce3db;border-radius:12px;padding:22px;overflow-wrap:anywhere}.rede-card h3{font-size:18px;line-height:1.4;margin:0 0 10px}.rede-card p{line-height:1.6;margin:10px 0}.rede-card a{color:#235e49;display:inline-block;padding:8px 0;min-height:44px}.rede-card h4{margin:18px 0 4px;font-size:13px}.rede-especialidades{font-weight:600}.rede-phones>a{margin-right:18px}.rede-card details{margin-top:16px;border-top:1px solid #dce3db;padding-top:12px}.rede-card summary{cursor:pointer;min-height:44px;padding:10px 0;font-weight:600}.rede-card li{margin-bottom:18px}.rede-card li p{font-size:13px}.rede-card ul{padding-left:20px}@media(max-width:768px){.rede-grid{grid-template-columns:minmax(0,1fr)}.rede-card{padding:18px}}
+.rede-phones>.rede-phone-text{display:block;margin:8px 0;line-height:1.6}

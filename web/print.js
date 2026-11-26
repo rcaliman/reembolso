@@ -1,0 +1,16 @@
+const sheet=document.querySelector('.sheet');
+const pages=document.querySelector('.print-pages');
+// Coordenadas em porcentagem da página A4 original, sem alterar sua arte.
+// Inscrição: limites x=97 e x=709 da arte de 1489 px; as células
+// extremas medem 33,5 e 38,5 px, e as 15 internas medem 36 px.
+function field(text,x,y,width,{registration=false}={}){if(!text)return;const el=document.createElement('div');el.className='field'+(registration?' registration':'');el.style.left=x+'%';el.style.top=y+'%';el.style.width=width+'%';if(registration){for(const ch of String(text).padEnd(17,' ')){const span=document.createElement('span');span.textContent=ch;el.append(span)}}else el.textContent=text;sheet.append(el);return el}
+async function run(){const id=new URLSearchParams(location.search).get('id');if(!/^\d+$/.test(id||''))throw Error('Pedido inválido.');const res=await fetch('/api/pedidos/'+id);if(!res.ok)throw Error('Não foi possível encontrar o pedido.');const d=await res.json(),s=d.solicitante,p=d.prestador,c=d.conta,o=d.pedido;
+field(s.inscricao,6.514439,12.55,41.101410,{registration:true});field([s.email,s.email_secundario].filter(Boolean).join(' / '),48.1,12.5,46.7);field(s.nome,7,15.9,55.5);field(s.telefone,64,15.9,30.5);
+if(d.dependente){field(d.dependente.inscricao,6.514439,21.55,41.101410,{registration:true});field(d.dependente.nome,48.1,21.5,46.5)}
+field(p.nome,7,27.05,51);field(p.documento,59.1,27.05,19);field(Number(o.valor).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}),79.2,27.05,15.8);
+field('X',c.tipo==='corrente'?30.9:52.7,29.25,2);field(c.banco,7,32.65,32);field(c.agencia,40.3,32.65,32.5);field(c.numero,73.7,32.65,21);field(c.titular,7,36.05,65.5);field(c.cpf,73.7,36.05,21);
+const date=o.data.split('-').reverse().join('/');field(`${o.local}, ${date}`,8.6,48.35,39.5);
+for(const [index,key] of ['nota','nota2','nota3'].entries()){const note=d[key];if(!note)continue;const base=index===0?`/api/pedidos/${id}/nota`:`/api/pedidos/${id}/documentos/${index+1}`;const label=note.nome || (index===0?'Nota fiscal':`Documento ${index+1}`);const total=Number(note.paginas);for(let page=1;page<=total;page++){const article=document.createElement('article');article.className='sheet invoice-sheet';article.setAttribute('aria-label',`${label} — página ${page}`);const img=document.createElement('img');img.alt=`${label} — página ${page}`;img.src=`${base}/paginas/${page}`;article.append(img);pages.append(article)}const link=document.createElement('a');link.href=base;link.target='_blank';link.rel='noopener';link.textContent=`Abrir PDF: ${label}`;document.querySelector('.print-toolbar').append(link)}
+sheet.classList.remove('hidden');await document.fonts.ready;await Promise.all([...document.images].map(img=>img.decode()));for(const el of document.querySelectorAll('.field:not(.registration)')){if(el.scrollWidth>el.clientWidth)el.style.transform=`scaleX(${el.clientWidth/el.scrollWidth})`}
+document.querySelector('#print').disabled=false;document.querySelector('#print').onclick=()=>window.print();document.title=`Reembolso - ${s.nome} - ${date}`}
+run().catch(e=>{document.querySelector('#error').className='print-error';document.querySelector('#error').textContent=e.message});

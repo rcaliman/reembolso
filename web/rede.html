@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rede credenciada · Banescaixa</title>
+<link rel="stylesheet" href="/style.css">
+<meta name="theme-color" content="#235e49"><link rel="manifest" href="/manifest.webmanifest"><link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><script src="/pwa.js" defer></script>
+</head>
+<body>
+<main id="conteudo" tabindex="-1" class="rede-main">
+  <header><div class="eyebrow">BANESCAIXA · REDE CREDENCIADA</div><h1>Rede credenciada</h1><p>Encontre prestadores por cidade, especialidade ou pelos dois filtros.</p></header>
+  <section aria-label="Filtros da rede credenciada">
+    <form id="rede-filtros">
+      <div class="grid">
+        <label>Cidade<select id="cidade" name="cidade" disabled><option value="">Todas as cidades</option></select></label>
+        <label>Especialidade<select id="especialidade" name="especialidade" disabled><option value="">Todas as especialidades</option></select></label>
+      </div>
+      <div class="rede-actions"><button id="buscar" type="submit" disabled>Pesquisar</button><button id="limpar" type="button" class="secondary" disabled>Limpar filtros</button></div>
+    </form>
+    <p><small>Dados da Banescaixa coletados em 26/11/2026. Confirme o atendimento ao seu plano antes de agendar. Os contatos encontrados na web foram pesquisados somente para Colatina e não tiveram o funcionamento confirmado.</small></p>
+  </section>
+  <div id="error" role="alert"></div>
+  <p id="rede-status" role="status" aria-live="polite">Carregando rede credenciada…</p>
+  <div id="rede-resultados" aria-busy="true"></div>
+</main>
+<script src="/session.js"></script><script src="/rede.js"></script>
+</body>
+</html>
